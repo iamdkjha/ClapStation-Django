@@ -1,0 +1,15 @@
+{% load static %}
+
+<div class="post-view-likes-counter" id="likes-counter-div-{{ obj.id }}">
+    <a href="">
+        <span id="like-{{ obj.id }}">
+            {{obj.likes.count}}
+        </span>
+        {% if obj.likes.count <= 1 %} 
+        Like
+        {%  else %}
+        Likes
+        {% endif %}
+    </a>
+</div>
+
