@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from home.models import *
 from posts.models import *
 from posts.forms import CreatePostForm
+from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
@@ -31,6 +32,8 @@ def homePage(request):
     paginator = Paginator(all_posts, 3)
     page_number = request.GET.get('page')
     page_object = paginator.get_page(page_number)
+    
+    
 
 
     # Fetching LoggedIn UserName
@@ -48,8 +51,7 @@ def homePage(request):
         'loggedInUser':loggedInUser,
     }
 
-
-    
+    print()
 
     return render(request, 'index.html', context=context)
 

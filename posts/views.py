@@ -42,7 +42,12 @@ def like_post(request, pk):
     else:
         post.likes.add(request.user)
     
-    return render(request, 'snippets/likes.html', {'obj':post})
+    
+    context = {
+        'obj':post,
+    }
+    
+    return render(request, 'snippets/likes.html', context=context)
 
 
 

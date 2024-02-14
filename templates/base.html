@@ -14,26 +14,15 @@
 
     <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
-    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'css/about.css' %}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
 
 
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    
-
-    <style>
-        #bg-image {
-            background-image: url('{% static "img/pageback.png"%}');
-        }
-
-        .search-btn {
-            background-image: url('{% static "img/search-gray-white.png"%}');
-        }
-    </style>
 
 </head>
 
@@ -73,9 +62,8 @@
 
                             <div class="search-form-header">
                                 <form action="" class="search-form">
-                                    <input type="text" placeholder="Search..." name="search"
-                                        class="search-input slowHover">
-                                    <button type="submit" class="search-btn"></button>
+                                    <div class="search-bar-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                                    <input type="text" placeholder="Search..." name="search"  class="search-input slowHover">
                                 </form>
                             </div>
 
@@ -92,14 +80,22 @@
 
 
                             <div class="header-user">
-                                <a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-bell header-icons" aria-hidden="true"></i></a>
                             </div>
 
                             <div class="header-user header-profile">
-                                <a href="#"><i class="fa fa-user" aria-hidden="true"></i></a>
+                                {% if request.user.is_authenticated %}
+                                    <div class="user-photo-icon header-user-icon">
+                                        <img src="{% static 'img/noprofile.png' %}" alt="">
+                                    </div>
+                                {% else %}
+                                    <a href="#"><i class="fa fa-user header-icons" aria-hidden="true"></i></a>
+                                {% endif %}
+                                
+                                
                                 <div class="header-profile-dropdown slowHover">
                                     <ul>
-                                        {% if request.user.is_authenticated%}
+                                        {% if request.user.is_authenticated %}
                                         <li id="profile">
                                             <a href="profile/{{request.user.email}}" class="slowHover">
                                                 <i class="fa fa-user" aria-hidden="true"></i> 

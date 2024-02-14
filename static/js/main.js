@@ -42,6 +42,7 @@ document.addEventListener('keydown', function(e){
     }
 });
 
+
 // 
 
 const imgInput = document.querySelector("#img-input")
@@ -99,3 +100,30 @@ postView.forEach((postViewElement) => {
     });
 });
 
+
+// Comment Modal
+const cmmntTrigger = document.querySelector('#cmmntTrigger');
+const cmmntWrapper = document.querySelector('.post-cmmnt-btn-modal-wrapper');
+const cmmntCloseButton = document.querySelector('#cmmntCloseButton');
+const cmmntSubmitBtn = document.querySelector('#cmmntSubmitBtn');
+
+
+cmmntTrigger.addEventListener('click', function(){
+    cmmntWrapper.classList.add('opacityTrigger');
+});
+
+cmmntCloseButton.addEventListener('click', function(){
+    cmmntWrapper.classList.remove('opacityTrigger');
+});
+
+cmmntWrapper.addEventListener('click', function(e){
+    if(e.target !== this) return;
+
+    cmmntWrapper.classList.remove('opacityTrigger');
+});
+
+document.addEventListener('keydown', function(e){
+    if(e.key == 'Escape'){
+        cmmntWrapper.classList.remove('opacityTrigger');
+    }
+});

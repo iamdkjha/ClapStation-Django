@@ -52,27 +52,21 @@
 							</div>
 
 							<div class="home-left-area-btn">
-								<button class="cmmn-btn slowHover" type="button">Book Jamming Space</button>
-								<button class="cmmn-btn slowHover" type="button">Book a Tutor</button>
-								<button class="cmmn-btn slowHover" type="button">Search Students</button>
+								<button class="cmmn-btn" type="button">Book Jamming Space</button>
+								<button class="cmmn-btn" type="button">Book a Tutor</button>
+								<button class="cmmn-btn" type="button">Search Students</button>
 							</div>
 
 						</div>
 					</div>
 	
 					<div class="col-lg-7 col-md-3 col-sm-12 col-xs-12 home-center-col">
-
 						<div class="home-middle-area main-home-middle-area">
 							{% if request.user.is_authenticated%}
 							<form action="{% url 'post-create' %}" method="post" enctype="multipart/form-data">
 								{% csrf_token %}
 								<div class="middle-upload-post-section">
 									<div class="middle-txt-area">
-										<a href="" >
-											<div class="home-middle-upload-post-profile-icon">
-												<img src="{% static 'img/three.jpg' %}" alt="">
-											</div>
-										</a>
 										<a id="homePostUploadTrigger">
 											<textarea readonly class="scroll-remover" rows="1" cols="90"
 											placeholder="Share your content....."></textarea>
@@ -290,121 +284,8 @@
 							{% endif %}
 
 							{% for obj in page_obj %}
-							<div class="home-posts-wrap">
-								<div class="post-view-user-data-container">
-									
-									<div class="post-view-user-data">
-										<a href="" >
-											<div class="home-middle-upload-post-profile-icon">
-												<img src="{% static 'img/three.jpg' %}" alt="">
-											</div>
-										</a>
-	
-										<div class="post-view-user-data-content">
-											<a href="{% url 'user-profile' obj.user.email %}" class="post-view-user-name">
-												{{obj.user.first_name}} {{obj.user.last_name}}
-											</a>
-											<span class="post-view-date-time">
-												{{obj.created_at}}
-											</span>
-										</div>
-									</div>
-
-									<div class="post-view-more-option">
-										
-										<img src="{% static 'img/ellipsis.svg' %}" alt="More option" id="threeDotsId" class="three-dots-class">
-										<div class="three-dots-menu" id="threeDotsMenu">
-											<div class="">
-												<a href="/">Rate</a>
-											</div>
-											{% if request.user.email == obj.user.email %}
-											<div class="">
-												<a href="{% url 'post-delete' obj.id %}">
-													<i class="fa fa-trash" aria-hidden="true"></i>
-													<span>Delete Post</span>
-												</a>
-											</div>
-											
-											<div>
-												<a href="/">
-													<span>Edit Post</span>
-												</a>
-											</div>
-											{% endif %}
-										</div>
-										
-									</div>
-									
-								</div>
-
-								<div class="post-view-upload-content">
-									{{obj.postContent | linebreaks }}
-								</div>
-
-								{% if obj.postImage.url is not None %}
-								<div class="universal-hr-line"></div>
-								<div class="home-upload-post-image-container">
-									<img src="{{obj.postImage.url}}" alt="image-{{obj}}">
-								</div>
-								<div class="universal-hr-line"></div>
-								{% endif %}
-
-								<div class="">
-
-									{% comment %} {% if obj.postImage.url == Null %}
-									<div class="hr-line"></div>
-									{% endif %} {% endcomment %}
-
-									<div class="post-view-counter-section">
-										{% include "snippets/likes.html" %}
-										
-										<div class="post-view-comments-share-counter">
-											
-										</div>
-									</div>
-
-									<div class="hr-line"></div>
-
-									<div class="post-view-action-section">
-											<div class="test-bot">
-												<a hx-get='{% url 'post-like' obj.id %}'
-												hx-target="#likes-counter-div-{{ obj.id }}"
-												hx-swap="outerHTML">
-													<li>
-														<div class="post-view-action-section-list-div">
-															<i class="fa fa-thumbs-up" aria-hidden="true"></i>
-															<span>Like</span>
-														</div>
-													</li>
-												</a>
-											
-												<a href=''>
-													<li>
-														<div class="post-view-action-section-list-div">
-															<i class="fas fa-comment-dots" aria-hidden="true"></i>
-															<span>
-																Comment
-															</span>
-														</div>
-													</li>
-												</a>
-											
-												<a href="#">	
-													<li>
-														<div class="post-view-action-section-list-div">
-															<i class="fa fa-share-square" aria-hidden="true"></i>
-															<span>
-																Share
-															</span>
-														</div>
-													</li>
-												</a>
-											</div>
-									</div>
-
-								</div>
-
-							</div>
+							
+								{% include "snippets/post.html" %}
 	
 							{% endfor %}
 	
@@ -504,6 +385,41 @@
 					</div>
 	
 				</div>
+
+				<!-- Home All Modals -->
+				<div class="home-all-modals-container">
+
+					<!-- Posts comment btn modal here  -->
+					<div class="post-cmmnt-btn-modal-wrapper">
+						<div class="post-cmmnt-btn-modal-container">
+							<div class="post-cmmnt-btn-modal-container-header">
+								<span class="">
+									User's Post
+								</span>
+								<button  type="button" id="cmmntCloseButton">
+									&times;
+								</button>
+							</div>
+							<div class="universal-hr-line"></div>
+							<div class="post-cmmnt-btn-modal-container-content-area">
+								{% for obj in page_obj %}
+									{% include "snippets/post.html" %}
+								{% endfor %}
+							</div>
+							<div class="universal-hr-line"></div>
+							<div class="post-cmmnt-btn-modal-container-cmmnt-box">
+								<form action="" class="post-cmmnt-btn-modal-container-cmmnt-box-form">
+									<textarea name="" id="" rows="1" placeholder="Write your comment.."></textarea>
+									<button type="submit" id="cmmntSubmitBtn">
+										Submit
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
 
 			</div>
 
